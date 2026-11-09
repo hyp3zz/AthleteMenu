@@ -35,7 +35,7 @@
 1. Загрузите проект в GitHub-репозиторий в ветку `main`.
 2. В **Settings → Secrets and variables → Actions** создайте secrets `SUPABASE_URL` и `SUPABASE_ANON_KEY` из **Project Settings → API** в Supabase.
 3. В **Settings → Pages** выберите источником публикации **GitHub Actions**. Workflow `.github/workflows/pages.yml` публикует HTML, CSS, JavaScript и изображения при каждом push в `main`.
-4. После первого запуска workflow откройте выданный GitHub Pages URL и добавьте его в Supabase **Authentication → URL Configuration** как Site URL и разрешённый Redirect URL. Для адреса вида `https://USER.github.io/REPOSITORY/` разрешите `https://USER.github.io/**`.
+4. После первого запуска workflow откройте выданный GitHub Pages URL и добавьте его в Supabase **Authentication → URL Configuration** как Site URL и разрешённый Redirect URL. Для проекта `https://USER.github.io/REPOSITORY/` укажите `https://USER.github.io/REPOSITORY/` как Site URL и разрешите `https://USER.github.io/REPOSITORY/**`.
 
 `config.js` остаётся исключённым из Git. Не загружайте в репозиторий `service_role` или secret key. `start.bat` можно оставить для локальной разработки; открывать приложение через него для GitHub Pages не требуется.
 
