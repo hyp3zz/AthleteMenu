@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Иллюстрация спортсмена">
+<defs><linearGradient id="bg" x2=".8" y2="1"><stop stop-color="#e7effb"/><stop offset="1" stop-color="#fff"/></linearGradient></defs><rect width="128" height="128" rx="64" fill="url(#bg)"/><path d="M19 128c3-29 17-44 45-44s42 15 45 44" fill="#2985a5"/><path d="M37 52c-1-24 11-39 29-39 19 0 30 14 27 40-2 20-14 34-30 34S38 73 37 52Z" fill="#a96f51"/><path d="M35 53c-6-28 7-45 29-45 23 0 35 17 29 48-7-8-10-18-13-27-14 10-28 14-44 12Z" fill="#25211f"/><path d="M48 58h2m27 0h2" stroke="#46332c" stroke-width="3" stroke-linecap="round"/><path d="M55 71c5 4 12 4 18 0" fill="none" stroke="#9b5949" stroke-width="2" stroke-linecap="round"/>
+</svg>

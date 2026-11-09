@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 640" role="img" aria-label="Уверенный и энергичный спортсмен">
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#123c30"/>
+      <stop offset=".56" stop-color="#24654b"/>
+      <stop offset="1" stop-color="#0b2c23"/>
+    </linearGradient>
+    <radialGradient id="sunlight" cx=".68" cy=".36" r=".6">
+      <stop stop-color="#b5e0a7" stop-opacity=".72"/>
+      <stop offset="1" stop-color="#8fc99a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="skin" x1=".15" y1="0" x2=".85" y2="1">
+      <stop stop-color="#f5c9a5"/>
+      <stop offset=".58" stop-color="#e6a77d"/>
+      <stop offset="1" stop-color="#c77e5d"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#42b879"/>
+      <stop offset=".55" stop-color="#168154"/>
+      <stop offset="1" stop-color="#0d5b3d"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="0" y1="0" x2=".9" y2="1">
+      <stop stop-color="#3b302a"/>
+      <stop offset="1" stop-color="#171f1b"/>
+    </linearGradient>
+    <filter id="soft-shadow" x="-.3" y="-.3" width="1.6" height="1.7">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12"/>
+      <feOffset dy="8"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".2"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="portrait-clip"><path d="M585 640c9-91 29-161 73-205 33-33 77-47 133-43 63 4 109 31 138 78 26 43 39 102 46 170Z"/></clipPath>
+  </defs>
+  <rect width="960" height="640" fill="url(#background)"/>
+  <rect width="960" height="640" fill="url(#sunlight)"/>
+  <circle cx="722" cy="282" r="244" fill="none" stroke="#e1f6dc" stroke-opacity=".12" stroke-width="2"/>
+  <circle cx="722" cy="282" r="282" fill="none" stroke="#e1f6dc" stroke-opacity=".08" stroke-width="2"/>
+  <path d="M0 515c194-62 331 20 490-17 181-43 307-23 470-82v224H0Z" fill="#08251d" opacity=".58"/>
+  <g opacity=".18" fill="none" stroke="#d6f0da" stroke-width="4" stroke-linecap="round">
+    <path d="M835 125v76m-24-52h48M882 251v48m-17-32h34"/>
+    <circle cx="545" cy="191" r="5" fill="#d6f0da" stroke="none"/>
+    <circle cx="858" cy="372" r="4" fill="#d6f0da" stroke="none"/>
+  </g>
+
+  <!-- Athletic shoulders and shirt -->
+  <path d="M575 640c9-91 29-161 73-205 33-33 77-47 133-43 63 4 109 31 138 78 26 43 39 102 46 170Z" fill="url(#shirt)" filter="url(#soft-shadow)"/>
+  <path d="M702 420c2 38 13 61 38 76 26 16 53 16 79-1 23-15 34-40 34-76Z" fill="url(#skin)"/>
+  <path d="M727 462c22 24 55 31 83 15 17-10 28-26 34-47l-2 34c-14 36-42 54-76 50-22-3-42-17-54-39Z" fill="#bc7657" opacity=".42"/>
+  <path d="M676 476c30 20 67 30 105 30 36 0 72-10 101-30 27 22 44 57 54 101l29 63H557l31-72c17-44 44-74 88-92Z" fill="url(#shirt)"/>
+  <path d="M723 480c20 21 43 31 66 31 25 0 49-11 70-32l20 17c-20 42-53 65-91 65-40 0-73-24-91-66Z" fill="#d5f0df" opacity=".22"/>
+
+  <!-- Face, turned slightly toward the viewer -->
+  <ellipse cx="657" cy="304" rx="17" ry="25" fill="#d99570"/>
+  <ellipse cx="837" cy="297" rx="16" ry="23" fill="#d99570"/>
+  <path d="M664 256c8-59 47-94 101-94 57 0 97 41 99 103l-6 69c-4 54-42 98-92 101-53 3-96-38-101-94Z" fill="url(#skin)" filter="url(#soft-shadow)"/>
+  <!-- Natural short hair and hairline -->
+  <path d="M647 283c-8-50 4-91 31-117 24-23 56-34 91-31 43 3 75 23 91 56 10 20 13 48 7 78l-17-15-12-45c-25 15-56 21-91 19-27-1-49-8-68-18l-18 45Z" fill="url(#hair)"/>
+  <path d="M674 209c11-30 37-51 69-57m17 1c22 5 38 16 49 33" fill="none" stroke="#6a5142" stroke-opacity=".55" stroke-width="7" stroke-linecap="round"/>
+  <!-- Brows and eyes -->
+  <path d="M685 276c13-9 29-10 42-3m43-2c14-8 30-7 42 2" fill="none" stroke="#654737" stroke-width="6" stroke-linecap="round"/>
+  <path d="M690 292c10 8 24 9 35 1m53-1c11 8 24 8 35 0" fill="none" stroke="#fff8ef" stroke-width="5" stroke-linecap="round"/>
+  <ellipse cx="709" cy="293" rx="4.5" ry="5.5" fill="#34483e"/>
+  <ellipse cx="796" cy="292" rx="4.5" ry="5.5" fill="#34483e"/>
+  <circle cx="710" cy="291" r="1.5" fill="#fff"/>
+  <circle cx="797" cy="290" r="1.5" fill="#fff"/>
+  <!-- Soft nose, healthy cheeks, relaxed smile -->
+  <path d="M751 294c-2 17-8 31-13 41 5 5 12 7 20 5" fill="none" stroke="#bd795c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity=".78"/>
+  <ellipse cx="695" cy="323" rx="16" ry="8" fill="#ee9f83" opacity=".3"/>
+  <ellipse cx="808" cy="322" rx="16" ry="8" fill="#ee9f83" opacity=".28"/>
+  <path d="M714 351c14 16 39 20 58 10 5-3 9-7 12-11" fill="none" stroke="#995744" stroke-width="5" stroke-linecap="round"/>
+  <path d="M723 354c14 8 31 10 45 4" fill="none" stroke="#fff0df" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+  <path d="M671 319c1 27 7 48 18 63" fill="none" stroke="#ffd8b9" stroke-opacity=".45" stroke-width="5" stroke-linecap="round"/>
+  <path d="M833 319c-2 21-8 39-18 53" fill="none" stroke="#a9624d" stroke-opacity=".28" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Subtle collar detail -->
+  <path d="M691 478c20 17 45 26 76 26 31 0 58-9 80-27" fill="none" stroke="#d7f2df" stroke-opacity=".3" stroke-width="3"/>
+</svg>

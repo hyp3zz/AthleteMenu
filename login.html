@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b2b22">
+  <title>Вход — AthleteMenu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="assets/css/style.css?v=20261106b">
+</head>
+<body class="auth-page">
+  <main class="auth-layout">
+    <section class="auth-visual" aria-label="AthleteMenu — питание для спортивных целей">
+      <img class="auth-visual-photo" src="assets/images/login-athlete.jpg" alt="Спортсменка тренируется в зале с канатами" data-image-fallback="banner" loading="lazy">
+      <a class="auth-brand" href="index.html" aria-label="AthleteMenu — на главную">
+        <span class="auth-brand-mark" aria-hidden="true">✦</span><span>AthleteMenu</span>
+      </a>
+      <div class="auth-visual-copy">
+        <span class="auth-eyebrow">ПИТАНИЕ · ТРЕНИРОВКИ · ПРОГРЕСС</span>
+        <h1>Путь к лучшей форме начинается с заботы о себе</h1>
+        <p>Планируйте рацион, следите за тренировками и замечайте свой прогресс.</p>
+      </div>
+      <div class="auth-visual-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="art-leaf">✦</div>
+        <div class="art-stat"><span class="art-stat-dot"></span><span>Ваш прогресс<br><b>день за днём</b></span></div>
+      </div>
+      <div class="auth-visual-footer"><span>Ежедневные привычки складываются в большие результаты</span><span class="auth-dots" aria-hidden="true">● ● ●</span></div>
+    </section>
+
+    <section class="auth-panel" aria-labelledby="auth-title">
+      <div class="auth-form-wrap">
+        <a class="auth-mobile-brand" href="index.html"><span class="auth-brand-mark" aria-hidden="true">✦</span>AthleteMenu</a>
+        <div class="auth-heading">
+          <p class="auth-kicker">С возвращением</p>
+          <h2 id="auth-title">Войти в аккаунт</h2>
+          <p>Введите данные, чтобы продолжить</p>
+        </div>
+        <div class="auth-message" data-auth-message role="status" aria-live="polite" hidden></div>
+        <form class="auth-form" data-auth-form="login" novalidate>
+          <label class="form-field" for="email">
+            <span>Электронная почта</span>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
+          </label>
+          <label class="form-field" for="password">
+            <span>Пароль</span>
+            <span class="password-wrap"><input id="password" name="password" type="password" autocomplete="current-password" placeholder="Введите пароль" required minlength="6"><button class="password-toggle" type="button" data-password-toggle aria-label="Показать пароль"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.3-6 9.5-6 9.5 6 9.5 6-3.3 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.7"/></svg></button></span>
+          </label>
+          <div class="auth-options"><label class="check-field"><input type="checkbox" name="remember"><span>Запомнить меня</span></label><button class="text-button" type="button" data-password-reset>Забыли пароль?</button></div>
+          <button class="button auth-submit" type="submit"><span data-submit-label>Войти</span><span class="button-spinner" aria-hidden="true"></span></button>
+        </form>
+        <p class="auth-switch">Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
+        <p class="auth-legal">Продолжая, вы соглашаетесь использовать AthleteMenu для планирования питания и тренировок.</p>
+      </div>
+      <footer class="auth-footer"><a href="index.html">AthleteMenu</a><span>Питание с умом. Тренировки с целью.</span></footer>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="assets/js/auth.js?v=20261106b"></script>
+</body>
+</html>
