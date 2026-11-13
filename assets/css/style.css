@@ -515,6 +515,9 @@ a { color: var(--accent); }
 .training-day-tile.is-today > strong { color: #fff; }
 .training-day-tile.is-selected:not(.is-today) { border-color: #65b68b; background: #edf7f1; color: var(--accent); }
 .training-day-tile.is-selected:not(.is-today) > strong { color: var(--accent); }
+.training-day-tile.is-past:disabled, .month-day.is-past:disabled { border-color: #e2e8e4; background: #f0f3f1; color: #a3aea8; box-shadow: none; cursor: not-allowed; opacity: .72; transform: none; }
+.training-day-tile.is-past:disabled > strong { color: #a3aea8; }
+.month-day.is-past:disabled:hover { border-color: #e2e8e4; background: #f0f3f1; color: #a3aea8; }
 .month-weekdays, .month-day-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 7px; }
 .month-weekdays { margin-bottom: 7px; }
 .month-weekdays span { padding: 3px; color: #829089; font-size: 9px; font-weight: 600; text-align: center; }

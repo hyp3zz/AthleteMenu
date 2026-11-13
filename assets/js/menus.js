@@ -229,9 +229,12 @@ function renderEditor() {
       <button class="button editor-save-button" type="button" data-save-menu><span aria-hidden="true">✓</span> Сохранить меню</button>
     </div>
     <section class="card editor-toolbar" aria-label="Параметры меню">
-      <label class="editor-select-field"><span>День</span><select data-editor-day>${EDITOR_WEEKDAYS.map((day, index) => `<option value="${index}"${index === editorDayIndex ? ' selected' : ''}>${day}</option>`).join('')}</select></label>
+      <label class="editor-select-field"><span>День</span><select data-editor-day>${EDITOR_WEEKDAYS.map((day, index) => {
+        const past = getEditorDate(index) < localDateString(new Date());
+        return `<option value="${index}"${index === editorDayIndex ? ' selected' : ''}${past ? ' disabled' : ''}>${day}</option>`;
+      }).join('')}</select></label>
       <label class="editor-select-field"><span>Тип меню</span><select data-editor-type><option value="daily">Дневное</option><option value="weekly">Недельное</option></select></label>
-      <p class="editor-week-hint" data-week-hint hidden>Меню будет записано на все дни текущей недели.</p>
+      <p class="editor-week-hint" data-week-hint hidden>Меню будет записано на сегодня и будущие дни недели. Прошедшие дни не включаются.</p>
     </section>
     <div class="editor-layout">
       <section class="card products-panel" aria-labelledby="products-title" aria-busy="true">
@@ -452,6 +455,9 @@ function getEditorDate(dayIndex) {
 }
 
 function validateEditor() {
+  if (editorMenuType === 'daily' && getEditorDate(editorDayIndex) < localDateString(new Date())) {
+    return 'Нельзя запланировать меню на прошедшую дату. Выберите сегодня или будущий день.';
+  }
   const invalid = page.querySelector('[data-quantity][aria-invalid="true"]');
   const anyInvalid = editorMeals.some((meal) => meal.items.some((item) => !Number.isFinite(Number(item.quantity_g)) || Number(item.quantity_g) <= 0 || Number(item.quantity_g) > 2000));
   if (anyInvalid) {
@@ -482,9 +488,13 @@ async function saveEditorMenu() {
   button.disabled = true;
   button.setAttribute('aria-busy', 'true');
   try {
-    const startDate = getEditorDate(editorMenuType === 'weekly' ? 0 : editorDayIndex);
-    const endDate = getEditorDate(editorMenuType === 'weekly' ? 6 : editorDayIndex);
-    const dates = editorMenuType === 'weekly' ? EDITOR_WEEKDAYS.map((_, index) => getEditorDate(index)) : [getEditorDate(editorDayIndex)];
+    const today = localDateString(new Date());
+    const dates = editorMenuType === 'weekly'
+      ? EDITOR_WEEKDAYS.map((_, index) => getEditorDate(index)).filter((date) => date >= today)
+      : [getEditorDate(editorDayIndex)];
+    if (!dates.length) throw new Error('В этой неделе не осталось дней для планирования.');
+    const startDate = dates[0];
+    const endDate = dates.at(-1);
     await saveMenuApi({
       ownerId: menuOwnerId || session.user.id,
       authorId: session.user.id,

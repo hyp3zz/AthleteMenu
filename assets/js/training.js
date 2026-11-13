@@ -21,6 +21,7 @@ let bodyWeightKg = null;
 
 function dateAtMidnight(date) { return new Date(date.getFullYear(), date.getMonth(), date.getDate()); }
 function toLocalIsoDate(date) { return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; }
+function localTodayIso() { return toLocalIsoDate(dateAtMidnight(new Date())); }
 function dateFromIso(value) { const [year, month, day] = String(value).slice(0, 10).split('-').map(Number); return new Date(year, month - 1, day); }
 function escapeHtml(value) { return String(value ?? '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]); }
 function startOfWeek(date) { const start = dateAtMidnight(date); start.setDate(start.getDate() - ((start.getDay() + 6) % 7)); return start; }
@@ -175,6 +176,7 @@ function renderCalendar() {
   if (!page) return;
   const anchor = currentPeriodAnchor();
   const { start, end } = currentPeriodRange();
+  const todayIso = localTodayIso();
   page.querySelector('[data-period-label]').textContent = mode === 'week'
     ? `${dateLabel(start, { day: 'numeric' })}–${dateLabel(addDays(end, -1), { day: 'numeric', month: 'long', year: 'numeric' })}`
     : anchor.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' });
@@ -186,11 +188,13 @@ function renderCalendar() {
     dayStrip.innerHTML = Array.from({ length: 7 }, (_, index) => {
       const date = addDays(start, index);
       const iso = toLocalIsoDate(date);
-      const today = iso === toLocalIsoDate(new Date());
-      const selected = iso === toLocalIsoDate(selectedDate);
-      return `<button type="button" class="training-day-tile${today ? ' is-today' : ''}${selected ? ' is-selected' : ''}" data-select-date="${iso}" aria-pressed="${selected}" aria-label="${WEEKDAY_FULL[date.getDay()]}, ${dateLabel(date)}"><span>${WEEKDAY_SHORT[index]}</span><strong>${date.getDate()}</strong><small>${date.toLocaleDateString('ru-RU', { month: 'short' }).replace('.', '')}</small></button>`;
+      const today = iso === todayIso;
+      const past = iso < todayIso;
+      const selected = !past && iso === toLocalIsoDate(selectedDate);
+      return `<button type="button" class="training-day-tile${today ? ' is-today' : ''}${selected ? ' is-selected' : ''}${past ? ' is-past' : ''}" data-select-date="${iso}" aria-pressed="${selected}" aria-label="${WEEKDAY_FULL[date.getDay()]}, ${dateLabel(date)}${past ? ', прошедшая дата' : ''}"${past ? ' disabled aria-disabled="true"' : ''}><span>${WEEKDAY_SHORT[index]}</span><strong>${date.getDate()}</strong><small>${date.toLocaleDateString('ru-RU', { month: 'short' }).replace('.', '')}</small></button>`;
     }).join('');
     dayStrip.querySelectorAll('[data-select-date]').forEach((button) => button.addEventListener('click', () => {
+      if (button.disabled) return;
       selectedDate = dateFromIso(button.dataset.selectDate);
       weekDayFilter = true;
       dayStrip.querySelectorAll('[data-select-date]').forEach((item) => item.classList.toggle('is-selected', item.dataset.selectDate === button.dataset.selectDate));
@@ -205,12 +209,14 @@ function renderCalendar() {
       const date = addDays(firstDay, index);
       const iso = toLocalIsoDate(date);
       const inMonth = date.getMonth() === month;
-      const today = iso === toLocalIsoDate(new Date());
-      const selected = iso === toLocalIsoDate(selectedDate);
+      const today = iso === todayIso;
+      const past = iso < todayIso;
+      const selected = !past && iso === toLocalIsoDate(selectedDate);
       const countForDate = sessions.filter((item) => toLocalIsoDate(new Date(item.starts_at)) === iso).length;
-      return `<button type="button" class="month-day${inMonth ? '' : ' is-outside'}${today ? ' is-today' : ''}${selected ? ' is-selected' : ''}" data-select-date="${iso}" aria-label="${WEEKDAY_FULL[date.getDay()]}, ${dateLabel(date)}${countForDate ? `, тренировок: ${countForDate}` : ''}" aria-pressed="${selected}"><span>${date.getDate()}</span>${countForDate ? `<i class="month-training-dots" aria-label="${countForDate} тренировок">${'<b></b>'.repeat(Math.min(countForDate, 3))}</i>` : '<i class="month-training-dots"></i>'}</button>`;
+      return `<button type="button" class="month-day${inMonth ? '' : ' is-outside'}${today ? ' is-today' : ''}${selected ? ' is-selected' : ''}${past ? ' is-past' : ''}" data-select-date="${iso}" aria-label="${WEEKDAY_FULL[date.getDay()]}, ${dateLabel(date)}${countForDate ? `, тренировок: ${countForDate}` : ''}${past ? ', прошедшая дата' : ''}" aria-pressed="${selected}"${past ? ' disabled aria-disabled="true"' : ''}><span>${date.getDate()}</span>${countForDate ? `<i class="month-training-dots" aria-label="${countForDate} тренировок">${'<b></b>'.repeat(Math.min(countForDate, 3))}</i>` : '<i class="month-training-dots"></i>'}</button>`;
     }).join('')}</div>`;
     monthCalendar.querySelectorAll('[data-select-date]').forEach((button) => button.addEventListener('click', () => {
+      if (button.disabled) return;
       selectedDate = dateFromIso(button.dataset.selectDate);
       monthCalendar.querySelectorAll('[data-select-date]').forEach((item) => item.classList.toggle('is-selected', item.dataset.selectDate === button.dataset.selectDate));
       renderSessionList();
@@ -361,8 +367,12 @@ function openTrainingDialog(training = null) {
   page.querySelector('[data-dialog-title]').textContent = training ? 'Редактировать тренировку' : 'Добавить тренировку';
   page.querySelector('[data-delete-training]').hidden = !training;
   form.dataset.sessionId = training?.id || '';
+  const todayIso = localTodayIso();
+  const dateInput = form.elements.date;
+  dateInput.min = todayIso;
   const startingDate = training ? new Date(training.starts_at) : selectedDate;
-  form.elements.date.value = toLocalIsoDate(startingDate);
+  const startingDateIso = toLocalIsoDate(startingDate);
+  dateInput.value = !training && startingDateIso < todayIso ? todayIso : startingDateIso;
   form.elements.time.value = training ? displayTime(training.starts_at) : '10:00';
   form.elements.duration.value = training?.duration_minutes || 90;
   form.elements.intensity.value = ({ низкая: 'low', средняя: 'medium', высокая: 'high' })[training?.intensity] || training?.intensity || 'medium';
@@ -391,6 +401,9 @@ function trainingPayload(form) {
   const time = form.elements.time.value;
   const duration = Number(form.elements.duration.value);
   if (!date || !time) return { error: 'Укажите дату и время тренировки.' };
+  if (date < localTodayIso() && (!form.dataset.sessionId || form.elements.status.value === 'planned')) {
+    return { error: 'Нельзя запланировать тренировку на прошедшую дату. Выберите сегодня или будущий день.' };
+  }
   if (!Number.isInteger(duration) || duration < 1 || duration > 600) return { error: 'Длительность должна быть от 1 до 600 минут.' };
   if (!form.elements.sport_id.value) return { error: 'Выберите тип тренировки.' };
   const startsAt = new Date(`${date}T${time}:00`);
